@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20200114212631) do
   create_table "coupons", force: :cascade do |t|
     t.string "name"
     t.string "code"
-    t.decimal "percent_off", precision: 2, scale: 2
+    t.decimal "percent_off", precision: 3, scale: 2
     t.bigint "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
