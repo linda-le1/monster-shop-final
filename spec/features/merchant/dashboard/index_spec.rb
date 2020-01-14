@@ -116,7 +116,7 @@ RSpec.describe 'as a merchant', type: :feature do
       expect(page).to have_link "See My Items"
       end
 
-    it "has link to manage coupons on dashboard" do
+    it "has link to manage their coupons on dashboard" do
       visit '/login'
       fill_in :email, with: @merchant_admin.email
       fill_in :password, with: @merchant_admin.password
@@ -124,7 +124,7 @@ RSpec.describe 'as a merchant', type: :feature do
 
       click_on "Merchant Dashboard"
       click_on "Manage Coupons"
-      expect(current_path).to eq("merchants/#{@merchant_company.id}/coupons")
+      expect(current_path).to eq("/merchant/coupons")
       expect(page).to have_content("Coupons for #{@merchant_company.name}")
     end
   end

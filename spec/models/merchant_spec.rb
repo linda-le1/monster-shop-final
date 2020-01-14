@@ -10,9 +10,9 @@ describe Merchant, type: :model do
   end
 
   describe "relationships" do
-    it {should have_many :items}
-    it {should have_many :users}
-    it {should have_many :coupons}
+    it { should have_many :items }
+    it { should have_many :users }
+    it { should have_many :coupons }
   end
 
   describe 'status' do
