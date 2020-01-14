@@ -1,7 +1,7 @@
 class Item <ApplicationRecord
   belongs_to :merchant
   has_many :reviews, dependent: :destroy
-  has_many :item_orders
+  has_many :item_orders, dependent: :destroy
   has_many :orders, through: :item_orders
 
   validates_presence_of :name,
@@ -11,7 +11,7 @@ class Item <ApplicationRecord
                         :inventory
 
   validates_inclusion_of :active?, :in => [true, false]
-  
+
   validates_numericality_of :price, greater_than: 0
   validates_numericality_of :inventory, greater_than: 0
 
