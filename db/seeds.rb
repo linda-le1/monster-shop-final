@@ -10,6 +10,7 @@ Merchant.destroy_all
 Item.destroy_all
 Order.destroy_all
 User.destroy_all
+Coupon.destroy_all
 
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -17,6 +18,9 @@ dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', c
 phone_shop = Merchant.create(name: "Daniel's Phone Shop", address: '456 Doggo St.', city: 'Denver', state: 'CO', zip: 80220)
 watch_shop = Merchant.create(name: "Danny's Watch Shop", address: '456 Puppo St.', city: 'Denver', state: 'CO', zip: 80221)
 liquor_store = Merchant.create(name: "Danny's Liquor store", address: '456 Liquor St.', city: 'Denver', state: 'CO', zip: 80222)
+
+#coupons
+ten_off = liquor_store.coupons.create(name: "10% Off Whole Purchase", code: "10OFF", percent_off: 10)
 
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -182,6 +186,12 @@ ItemOrder.create(item: rolex, order: order_5, price: rolex.price, quantity: 1, s
 ItemOrder.create(item: iphone, order: order_5, price: iphone.price, quantity: 1, status: 0)
 ItemOrder.create(item: flip_phone, order: order_5, price: flip_phone.price, quantity: 1, status: 0)
 ItemOrder.create(item: nikka, order: order_5, price: nikka.price, quantity: 100, status: 0)
+
+#orders for use with coupons
+order_6 = user.orders.create(name: "Linda", address: "456 Whiskey Ave", city: "Denver", state: "CO", zip: "80228", current_status: 0)
+ItemOrder.create(item: yamazaki, order: order_6, price: yamazaki.price, quantity: 1, status: 0)
+
+ten_off.orders << order_6
 
 #reviews
 review_1 = iphone.reviews.create(title: "Best phone!", content: "!!!", rating: 5)
