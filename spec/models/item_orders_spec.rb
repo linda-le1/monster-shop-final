@@ -50,9 +50,6 @@ describe ItemOrder, type: :model do
       expect(item_order_1.unfulfilled_item_order).to eq(true)
       item_order_1.update(quantity: 20)
       expect(item_order_1.unfulfilled_item_order).to eq(false)
-
     end
-
   end
-
 end
