@@ -58,7 +58,7 @@ user = User.create(name: "Jordan",
                     password_confirmation: "password",
                     role: 0)
 
-user = User.create(name: "Linda",
+user_2 = User.create(name: "Linda",
     address: "123 Oak Drive",
     city: "Denver",
     state: "CO",
@@ -202,7 +202,7 @@ ItemOrder.create(item: flip_phone, order: order_5, price: flip_phone.price, quan
 ItemOrder.create(item: nikka, order: order_5, price: nikka.price, quantity: 100, status: 0)
 
 #orders for use with coupons
-order_6 = user.orders.create(name: "Linda", address: "456 Whiskey Ave", city: "Denver", state: "CO", zip: "80228", current_status: 0)
+order_6 = user2.orders.create(name: "Linda", address: "456 Whiskey Ave", city: "Denver", state: "CO", zip: "80228", current_status: 0)
 ItemOrder.create(item: yamazaki, order: order_6, price: yamazaki.price, quantity: 1, status: 0)
 
 ten_off.orders << order_6
