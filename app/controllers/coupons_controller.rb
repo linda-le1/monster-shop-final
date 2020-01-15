@@ -4,7 +4,7 @@ class CouponsController < ApplicationController
         if coupon.nil?
             flash[:error] = 'This is an invalid coupon. Please try again.'
         else
-            session[:coupon_id] = coupon.id
+            session[:coupon] = coupon.id
             flash[:success] = "Coupon applied for items from #{coupon.merchant.name}!"
         end
         redirect_to '/cart'

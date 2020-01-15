@@ -37,19 +37,27 @@
         </center>
         </td>
       <td>
-        <p><%=number_to_currency(cart.subtotal(item))%></p>
+        <p><%= number_to_currency(cart.subtotal(item)) %></p>
     </td>
     </tr>
-  <% end %>
 </table>
-  <section id="discount">Add Discount Code Here:
-      <%= form_tag '/cart/coupon', method: :patch do %>
-      <%= label_tag 'Coupon Code' %>
-      <%= text_field_tag :code %><br/><br/>
-      <%= submit_tag "Apply Coupon" %>
-      <% end %>
-      </section><br/>
+        <% if current_coupon.nil? or !item.eligible_for_discount?(current_coupon) %>
         <h2>Total: <%= number_to_currency(cart.total) %></h2>
+
+        <% else %>
+        <h3>Discount Applied: <%= number_to_currency(item.total_discount_applied(current_coupon)) %></h3>
+        <h2>Discounted Total: <%= number_to_currency(cart.subtotal(item) - (item.total_discount_applied(current_coupon))) %></h2>
+        <% end %>
+<% end %>
+
+      <section id="discount">
+      Add Discount Code Here:
+        <%= form_tag cart_coupon_path, method: :patch do %>
+        <%= label_tag 'Coupon Code' %>
+        <%= text_field_tag :code %><br/><br/>
+        <%= submit_tag "Apply Coupon" %>
+        <% end %>
+      </section><br/>
 
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
 

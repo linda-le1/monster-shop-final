@@ -69,6 +69,10 @@ RSpec.describe 'Cart show' do
             item_2 = create(:random_item, merchant_id: merchant_2.id, inventory: 10)
             merchant.coupons << coupon_1
 
+            visit '/cart'
+            expect(page).to have_link("Empty Cart")
+            click_on "Empty Cart"
+
             visit "/items/#{item_1.id}"
             click_on "Add To Cart"
             visit "/items/#{item_2.id}"
@@ -115,6 +119,7 @@ RSpec.describe 'Cart show' do
       end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
