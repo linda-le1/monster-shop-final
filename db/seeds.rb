@@ -43,7 +43,7 @@ rolex = watch_shop.items.create(name: "Rolex", description: "The watch that does
 
 #liquor_store items
 royal = liquor_store.items.create(name: "Royal", description: "One glass 'ill do ya'!", price: 100, image: "https://image.insider.com/5b8060763cccd122008b4579?width=1100&format=jpeg&auto=webp", inventory: 8)
-yamazaki = liquor_store.items.create(name: "The Yamazaki", description: "Imported whiskey!", price: 180, image: "https://cdn11.bigcommerce.com/s-zhp7f0lunw/images/stencil/1024x1024/products/17352/4757/Nikka_From_the_Barrel__52967.1577829892.jpg?c=2", inventory: 7)
+yamazaki = liquor_store.items.create(name: "The Yamazaki", description: "Imported whiskey!", price: 180, image: "https://whisky.suntory.com/sites/default/files/2019-02/us-products-header-yamazaki-frame1.jpg", inventory: 7)
 nikka = liquor_store.items.create(name: "Nikka", description: "Straight from the barrel!", price: 180, image: "https://cdn11.bigcommerce.com/s-zhp7f0lunw/images/stencil/1024x1024/products/17352/4757/Nikka_From_the_Barrel__52967.1577829892.jpg?c=2", inventory: 10)
 
 
