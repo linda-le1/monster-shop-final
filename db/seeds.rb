@@ -8,6 +8,7 @@
 
 Merchant.destroy_all
 Item.destroy_all
+ItemOrder.destroy_all
 Order.destroy_all
 User.destroy_all
 Coupon.destroy_all
