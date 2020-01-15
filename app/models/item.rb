@@ -41,6 +41,6 @@ class Item <ApplicationRecord
   end
 
   def total_discount_applied(current_coupon)
-    price * current_coupon.percent_off.to_f
+      price * current_coupon.percent_off.to_f
   end
 end

@@ -48,7 +48,7 @@
     <td>
     No Discount Applied
     </td>
-    <% else %>
+    <% else item.eligible_for_discount?(current_coupon)%>
     <td> <%= number_to_currency(quantity * item.total_discount_applied(current_coupon)) %> DISCOUNT</td>
     <td> <%=  number_to_currency(cart.subtotal(item) - (quantity * item.total_discount_applied(current_coupon))) %></td>
     <% end %>
@@ -58,6 +58,9 @@
 
 
   <h3>Total: <%= number_to_currency(cart.total) %></h3>
+    <% if current_coupon %>
+      <h3>Discounted Total: <%= number_to_currency(cart.find_discounted_total(current_coupon)) %></h3>
+    <% end %>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
 
   <section id="checkout">
