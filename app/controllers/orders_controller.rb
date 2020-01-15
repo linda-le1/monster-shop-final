@@ -39,13 +39,21 @@ class OrdersController <ApplicationController
 
   def create_discount_order(order)
     order.update(coupon_id: current_coupon.id)
-    cart.items.each do |item,quantity|
-      order.item_orders.create({
-        item: item,
-        quantity: quantity,
-        price: item.total_discount_applied(current_coupon)
-        })
-    end
+      cart.items.each do |item,quantity|
+        if item.eligible_for_discount?(current_coupon)
+          order.item_orders.create({
+            item: item,
+            quantity: quantity,
+            price: (item.price - item.total_discount_applied(current_coupon))
+            })
+        else
+          order.item_orders.create({
+            item: item,
+            quantity: quantity,
+            price: item.price
+            })
+        end
+      end
     session.delete(:cart)
     session.delete(:coupon)
     flash[:success] = 'You have placed your order!'
