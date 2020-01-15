@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     get '/coupons', to: 'coupons#index'
     get '/coupons/new', to: 'coupons#new'
     post '/coupons', to: 'coupons#create'
+    delete 'coupons/:id', to: 'coupons#destroy'
   end
 
   namespace :admin do
