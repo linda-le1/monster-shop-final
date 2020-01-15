@@ -69,6 +69,11 @@ RSpec.describe 'Cart show' do
             item_2 = create(:random_item, merchant_id: merchant_2.id, price: 150, inventory: 10)
             merchant.coupons << coupon_1
 
+            visit '/login'
+            fill_in :email, with: user.email
+            fill_in :password, with: user.password
+            click_button "Login"
+
             visit '/cart'
             expect(page).to have_link("Empty Cart")
             click_on "Empty Cart"
@@ -80,7 +85,7 @@ RSpec.describe 'Cart show' do
 
             visit '/cart'
 
-            within "#discount" do
+            within "#checkout" do
               fill_in :code, with: '10OFF'
               click_on 'Apply Coupon'
             end
@@ -106,6 +111,11 @@ RSpec.describe 'Cart show' do
           item_2 = create(:random_item, merchant_id: merchant_2.id, inventory: 10)
           merchant.coupons << coupon_1
 
+          visit '/login'
+          fill_in :email, with: user.email
+          fill_in :password, with: user.password
+          click_button "Login"
+
           visit "/items/#{item_1.id}"
           click_on "Add To Cart"
           visit "/items/#{item_2.id}"
@@ -113,7 +123,7 @@ RSpec.describe 'Cart show' do
 
           visit '/cart'
 
-          within "#discount" do
+          within "#checkout" do
             fill_in :code, with: '25OFF'
             click_on 'Apply Coupon'
           end

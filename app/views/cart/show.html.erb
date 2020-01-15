@@ -56,20 +56,18 @@
     <% end %>
 </table>
 
-      <section id="discount">
-      <h3>Add Discount Code Here: </h3>
-        <%= form_tag coupon_path, method: :patch do %>
-        <%= label_tag 'Coupon Code' %>
-        <%= text_field_tag :code %><br/><br/>
-        <%= submit_tag "Apply Coupon" %>
-        <% end %>
-      </section><br/>
 
   <h3>Total: <%= number_to_currency(cart.total) %></h3>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
 
   <section id="checkout">
     <% if current_user %>
+      <h3>Add Discount Code Here: </h3>
+        <%= form_tag coupon_path, method: :patch do %>
+        <%= label_tag 'Coupon Code' %>
+        <%= text_field_tag :code %><br/><br/>
+        <%= submit_tag "Apply Coupon" %>
+        <% end %><br/>
       <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
     <% else %>
       <p>You must <%= link_to 'register', '/register', method: :get %> or <%= link_to 'login', '/login', method: :get %> to finish the checkout process.</p>
