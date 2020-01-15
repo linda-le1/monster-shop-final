@@ -136,12 +136,13 @@ RSpec.describe "Order Creation" do
       end
     end
     describe "Create a discounted order" do
-      it "can create a discounted order" do
+      it "can create a discounted order with the last coupon entered applied" do
         merchant = create(:random_merchant)
         merchant_2 = create(:random_merchant)
         coupon_1 = Coupon.create(name: '10 Percent Off Total Purchase', code: '10OFF', percent_off: 0.10)
+        coupon_2 = Coupon.create(name: '20 Percent Off Total Purchase', code: '20OFF', percent_off: 0.20)
         merchant.coupons << coupon_1
-
+        merchant.coupons << coupon_2
         user = create(:random_user, role: 0)
         item_1 = create(:random_item, merchant_id: merchant.id, price: 20, inventory: 10)
         item_2 = create(:random_item, merchant_id: merchant_2.id, price: 150, inventory: 10)
@@ -161,6 +162,21 @@ RSpec.describe "Order Creation" do
           fill_in :code, with: '10OFF'
           click_on 'Apply Coupon'
         end
+
+        expect(page).to have_content("Discounted Total: $168.00")
+
+        visit "/items/#{item_2.id}"
+
+        visit '/cart'
+
+        within "#checkout" do
+          fill_in :code, with: '20OFF'
+          click_on 'Apply Coupon'
+        end
+
+        save_and_open_page
+
+        expect(page).to have_content("Discounted Total $166.00")
 
         click_on "Checkout"
 
