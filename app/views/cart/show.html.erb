@@ -43,7 +43,16 @@
   <% end %>
 </table>
   <p>Total: <%= number_to_currency(cart.total) %></p>
+  <p>Add Discount Code Here:
+      <%= form_tag "/cart/coupon", method: 'patch' do %>
+      <%= label_tag 'Coupon Code' %>
+      <%= text_field_tag :code %><br/><br/>
+      <%= submit_tag "Apply Coupon" %>
+      <% end %>
+      </p><br/>
+
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
+
   <section id="checkout">
     <% if current_user %>
       <p><%= link_to "Checkout", "/orders/new", method: :get %></p>

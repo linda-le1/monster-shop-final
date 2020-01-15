@@ -65,19 +65,23 @@ RSpec.describe 'Cart show' do
             merchant.coupons << coupon_1
 
             user = create(:random_user, role: 0)
-            item_1 = create(:random_item, merchant_id: merchant.id, inventory: 10)
+            item_1 = create(:random_item, merchant_id: merchant.id, price: 20, inventory: 10)
             item_2 = create(:random_item, merchant_id: merchant_2.id, inventory: 10)
-            order = create(:random_order, user_id: user.id)
-            item_order_1 = ItemOrder.create!(item: item_1, order: order, price: 20, quantity: 5)
-            item_order_2 = ItemOrder.create!(item: item_2, order: order, price: item_2.price, quantity: 5)
-            coupon_1.orders << order
+            merchant.coupons << coupon_1
+
+            visit "/items/#{item_1.id}"
+            click_on "Add To Cart"
+            visit "/items/#{item_2.id}"
+            click_on "Add To Cart"
+
+            visit '/cart'
 
             fill_in :code, with: '10OFF'
             click_on 'Apply'
 
             expect(current_path).to eql('/cart')
-            expect(page).to have_content('Discount Applied: $10.00')
-            expect(page).to have_content('Total: $90.00')
+            expect(page).to have_content('Discount Applied: $2.00')
+            expect(page).to have_content('Total: $18.00')
         end
     end
   end
