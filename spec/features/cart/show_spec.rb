@@ -85,6 +85,34 @@ RSpec.describe 'Cart show' do
             expect(page).to have_content('Discount Applied: $2.00')
             expect(page).to have_content('Total: $18.00')
         end
+
+        it 'cannot add a bad coupon code' do
+          merchant = create(:random_merchant)
+          merchant_2 = create(:random_merchant)
+          merchant_user = create(:random_user, role: 3, merchant_id: merchant.id)
+          coupon_1 = Coupon.create(name: '10 Percent Off Total Purchase', code: '10OFF', percent_off: 0.10)
+          merchant.coupons << coupon_1
+
+          user = create(:random_user, role: 0)
+          item_1 = create(:random_item, merchant_id: merchant.id, price: 20, inventory: 10)
+          item_2 = create(:random_item, merchant_id: merchant_2.id, inventory: 10)
+          merchant.coupons << coupon_1
+
+          visit "/items/#{item_1.id}"
+          click_on "Add To Cart"
+          visit "/items/#{item_2.id}"
+          click_on "Add To Cart"
+
+          visit '/cart'
+
+          within "#discount" do
+            fill_in :code, with: '25OFF'
+            click_on 'Apply Coupon'
+          end
+
+          expect(current_path).to eql('/cart')
+          expect(page).to have_content('This is an invalid coupon. Please try again.')
+      end
     end
   end
   describe "When I haven't added anything to my cart" do
