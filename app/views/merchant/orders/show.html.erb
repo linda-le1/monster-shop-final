@@ -1,18 +1,18 @@
 <h1>Order <%= @order.id %></h1>
-
-<h3><%= @order.user.name %></h3>
-<h3><%= @order.user.address %></h3>
-  <h3><%= @order.user.city %>
+<center>
+<h3>Name: <%= @order.user.name %></h3>
+<h3>Address: <%= @order.user.address %>,
+  <%= @order.user.city %>,
       <%= @order.user.state %>
       <%= @order.user.zip_code %></h3>
   <% if @order.coupon.present? %>
-  Coupon Used: <%= @order.coupon.name %>
-  Discounted Total: <%= number_to_currency(@order.grandtotal) %>
+  <b>Coupon Used: </b><%= @order.coupon.name %></br>
+  <b>Discounted Total: <%= number_to_currency(@order.grandtotal) %></b><br/><br>
   <% else %>
-  Total: <%= number_to_currency(@order.grandtotal) %>
+  Total: <%= number_to_currency(@order.grandtotal) %><br/><br>
   <% end %>
 
-<section class="grid-container">
+<center><section class="grid-container">
 
 <% current_user.merchant.item_orders_for(@order).each do |item_order| %>
   <section class="grid-item" id="item-<%= item_order.item.id %>">

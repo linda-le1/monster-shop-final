@@ -21,6 +21,9 @@ liquor_store = Merchant.create(name: "Danny's Liquor store", address: '456 Liquo
 
 #coupons
 ten_off = Coupon.create(name: "10% Off Whole Purchase", code: "10OFF", percent_off: 0.10, merchant_id: liquor_store.id)
+five_off = Coupon.create(name: "5% Off Whole Purchase", code: "5OFF", percent_off: 0.05, merchant_id: bike_shop.id)
+three_off = Coupon.create(name: "3% Off Whole Purchase", code: "3OFF", percent_off: 0.03, merchant_id: dog_shop.id)
+twenty_off = Coupon.create(name: "20% Off Whole Purchase", code: "10OFF", percent_off: 0.20, merchant_id: phone_shop.id)
 
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
