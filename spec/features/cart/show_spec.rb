@@ -10,6 +10,7 @@ RSpec.describe 'Cart show' do
         @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
         @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+
         visit "/items/#{@paper.id}"
         click_on "Add To Cart"
         visit "/items/#{@tire.id}"
@@ -55,6 +56,29 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+      it 'I can add a coupon code and see the discounted and updated total' do
+            merchant = create(:random_merchant)
+            merchant_2 = create(:random_merchant)
+            merchant_user = create(:random_user, role: 3, merchant_id: merchant.id)
+            coupon_1 = Coupon.create(name: '10 Percent Off Total Purchase', code: '10OFF', percent_off: 0.10)
+            merchant.coupons << coupon_1
+
+            user = create(:random_user, role: 0)
+            item_1 = create(:random_item, merchant_id: merchant.id, inventory: 10)
+            item_2 = create(:random_item, merchant_id: merchant_2.id, inventory: 10)
+            order = create(:random_order, user_id: user.id)
+            item_order_1 = ItemOrder.create!(item: item_1, order: order, price: 20, quantity: 5)
+            item_order_2 = ItemOrder.create!(item: item_2, order: order, price: item_2.price, quantity: 5)
+            coupon_1.orders << order
+
+            fill_in :code, with: '10OFF'
+            click_on 'Apply'
+
+            expect(current_path).to eql('/cart')
+            expect(page).to have_content('Discount Applied: $10.00')
+            expect(page).to have_content('Total: $90.00')
+        end
     end
   end
   describe "When I haven't added anything to my cart" do
