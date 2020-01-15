@@ -37,7 +37,7 @@ class Item <ApplicationRecord
   end
 
   def eligible_for_discount?(current_coupon)
-    current_coupon.merchant_id && merchant_id?
+    current_coupon.merchant_id == merchant_id
   end
 
   def total_discount_applied(current_coupon)

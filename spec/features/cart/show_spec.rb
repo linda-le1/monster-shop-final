@@ -57,7 +57,7 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Total: $124")
       end
 
-      it 'I can add a coupon code and see the discounted and updated total' do
+      it 'I can add a coupon code and see the discounted and updated total for that item' do
             merchant = create(:random_merchant)
             merchant_2 = create(:random_merchant)
             merchant_user = create(:random_user, role: 3, merchant_id: merchant.id)
@@ -66,7 +66,7 @@ RSpec.describe 'Cart show' do
 
             user = create(:random_user, role: 0)
             item_1 = create(:random_item, merchant_id: merchant.id, price: 20, inventory: 10)
-            item_2 = create(:random_item, merchant_id: merchant_2.id, inventory: 10)
+            item_2 = create(:random_item, merchant_id: merchant_2.id, price: 150, inventory: 10)
             merchant.coupons << coupon_1
 
             visit '/cart'
@@ -86,8 +86,12 @@ RSpec.describe 'Cart show' do
             end
 
             expect(current_path).to eql('/cart')
-            expect(page).to have_content('Discount Applied: $2.00')
-            expect(page).to have_content('Total: $18.00')
+            expect(page).to have_content('$2.00 DISCOUNT')
+            expect(page).to have_content('$18.00')
+            expect(page).to have_content('No Discount Applied')
+            expect(page).to have_content('$150.00')
+
+
         end
 
         it 'cannot add a bad coupon code' do
