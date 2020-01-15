@@ -5,16 +5,17 @@
 
 Monster Shop is a basic, Rails e-commerce application. Assigned as a group project during Mod 2 of 4 to our group of five, we worked across a period of twelve days to implement a slew of e-commerce basics including CRUD functionality, log in and authentication, authorization (for four different user types), cart functionality, and statistics for multiple aspects of the site (most popular, least popular, etc.)
 
-View Monster Shop from heroku [here](https://thawing-dusk-36674.herokuapp.com/).
+This version contains the addition of coupon functionality. Merchants have CRUD function over coupons and users may apply existing coupons to their orders. Implementing coupon functionality was assigned as a solo project.
 
+View Monster Shop from heroku [here](https://limitless-reaches-43129.herokuapp.com/).
 
 ## Implementation Instructions
 
 To implement Monster Shop locally, run the following commands:
 
-<code>git clone git@github.com:linda-le1/monster_shop_part_1.git</code>
+<code>git clone git@github.com:linda-le1/monster_shop_final.git</code>
 
-<code>cd monster_shop_part_1</code>
+<code>cd monster_shop_final</code>
 
 <code>bundle install</code>
 
@@ -27,11 +28,6 @@ Create a new [heroku](https://id.heroku.com/login) app and connect to your local
 <code>heroku git:remote -a your_heroku_app_name</code>
 
 Deploy Monster Shop from heroku.
-
-
-## Schema Design
-
-![alt text](/app/assets/images/screen_shot_2020-01-09_at_10.58.49_am.png)
 
 
 ## Contributors
@@ -49,6 +45,35 @@ Deploy Monster Shop from heroku.
 
 ## Background and Description
 
+### General Goals
+Merchant users can generate coupon codes within the system.
+
+### Completion Criteria
+Merchant users have a link on their dashboard to manage their coupons.
+
+Merchant users have full CRUD functionality over their coupons with exceptions mentioned below:
+
+- merchant users cannot delete a coupon that has been used in an order
+- Note: Coupons cannot be for greater than 100% off.
+A coupon will have a coupon name, a coupon code, and a percent-off value. The name and coupon code must be unique in the whole database.
+
+Users need a way to add a coupon code when checking out. Only one coupon may be used per order.
+
+A coupon code from a merchant only applies to items sold by that merchant.
+
+### Implementation Guidelines
+If a user adds a coupon code, they can continue shopping. The coupon code is still remembered when returning to the cart page. (This information should not be stored in the database until after checkout. )
+The cart show page should calculate subtotals and the grand total as usual, but also show a "discounted total".
+Users can enter different coupon codes until they finish checking out, then the last code entered before clicking checkout is final.
+Order show pages should display which coupon was used, as well as the discounted price.
+
+### Mod 2 Learning Goals reflected:
+Database relationships and migrations
+ActiveRecord
+Software Testing
+HTML/CSS layout and styling
+
+## THIS SOLO IMPLEMENTATION WAS BUILT OFF THE FOLLOWING GROUP PROJECT:
 BE Mod 2 Week 4/5 Group Project (Part 1)
 
 "Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will automatically set the order status to "shipped". Each user role will have access to some or all CRUD functionality for application models.
