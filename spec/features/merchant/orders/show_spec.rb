@@ -5,16 +5,24 @@ RSpec.describe 'As a merchant employee/admin' do
     merchant = create(:random_merchant)
     merchant2 = create(:random_merchant)
     merchant_employee = create(:random_user, role: 3, merchant_id: merchant.id)
+    @coupon_1 = Coupon.create(name: "10% Off Item", code: "10OFF", percent_off: 0.10)
+    merchant2.coupons << @coupon_1
     @user = create(:random_user)
 
-    @item_1 = create(:random_item, merchant_id: merchant.id, inventory: 10)
+    @item_1 = create(:random_item, merchant_id: merchant.id, inventory: 10, price: 10)
     @item_2 = create(:random_item, merchant_id: merchant.id, inventory: 2)
-    @item_3 = create(:random_item, merchant_id: merchant2.id)
+    @item_3 = create(:random_item, merchant_id: merchant2.id, price: 20)
 
     @order = create(:random_order, user_id: @user.id)
+    @order2 = create(:random_order, user_id: @user.id, current_status: 2, coupon_id: @coupon_1.id)
+
+
     @item_1_order = ItemOrder.create!(item: @item_1, order: @order, price: @item_1.price, quantity: 5)
     @item_2_order = ItemOrder.create!(item: @item_2, order: @order, price: @item_2.price, quantity: 3)
     @item_3_order = ItemOrder.create!(item: @item_3, order: @order, price: @item_3.price, quantity: 9)
+
+    @item_4_order = ItemOrder.create!(item: @item_1, order: @order2, price: @item_1.price, quantity: 1, status: 1)
+    @item_5_order = ItemOrder.create!(item: @item_3, order: @order2, price: @item_3.price, quantity: 2, status: 1)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
   end
@@ -117,5 +125,12 @@ RSpec.describe 'As a merchant employee/admin' do
       expect(page).not_to have_button("Fulfill")
       expect(page).to have_content('Not enough inventory to fulfill this order with this item')
     end
+  end
+
+    it "can see discounted order information" do
+      visit "/merchant/orders/#{@order2.id}"
+
+      expect(page).to have_content("Coupon Used: #{@coupon_1.name}")
+      expect(page).to have_content("Discounted Total: $45.00")
   end
 end

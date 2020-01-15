@@ -174,9 +174,7 @@ RSpec.describe "Order Creation" do
           click_on 'Apply Coupon'
         end
 
-        save_and_open_page
-
-        expect(page).to have_content("Discounted Total $166.00")
+        expect(page).to have_content("Discounted Total: $166.00")
 
         click_on "Checkout"
 

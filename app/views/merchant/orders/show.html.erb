@@ -5,6 +5,12 @@
   <h3><%= @order.user.city %>
       <%= @order.user.state %>
       <%= @order.user.zip_code %></h3>
+  <% if @order.coupon.present? %>
+  Coupon Used: <%= @order.coupon.name %>
+  Discounted Total: <%= number_to_currency(@order.grandtotal) %>
+  <% else %>
+  Total: <%= number_to_currency(@order.grandtotal) %>
+  <% end %>
 
 <section class="grid-container">
 
