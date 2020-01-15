@@ -21,6 +21,9 @@ liquor_store = Merchant.create(name: "Danny's Liquor store", address: '456 Liquo
 
 #coupons
 ten_off = Coupon.create(name: "10% Off Whole Purchase", code: "10OFF", percent_off: 0.10, merchant_id: liquor_store.id)
+five_off = Coupon.create(name: "5% Off Whole Purchase", code: "5OFF", percent_off: 0.05, merchant_id: bike_shop.id)
+three_off = Coupon.create(name: "3% Off Whole Purchase", code: "3OFF", percent_off: 0.03, merchant_id: dog_shop.id)
+twenty_off = Coupon.create(name: "20% Off Whole Purchase", code: "10OFF", percent_off: 0.20, merchant_id: phone_shop.id)
 
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -40,7 +43,7 @@ rolex = watch_shop.items.create(name: "Rolex", description: "The watch that does
 
 #liquor_store items
 royal = liquor_store.items.create(name: "Royal", description: "One glass 'ill do ya'!", price: 100, image: "https://image.insider.com/5b8060763cccd122008b4579?width=1100&format=jpeg&auto=webp", inventory: 8)
-yamazaki = liquor_store.items.create(name: "The Yamazaki", description: "Imported whiskey!", price: 180, image: "https://cdn11.bigcommerce.com/s-zhp7f0lunw/images/stencil/1024x1024/products/17352/4757/Nikka_From_the_Barrel__52967.1577829892.jpg?c=2", inventory: 7)
+yamazaki = liquor_store.items.create(name: "The Yamazaki", description: "Imported whiskey!", price: 180, image: "https://whisky.suntory.com/sites/default/files/2019-02/us-products-header-yamazaki-frame1.jpg", inventory: 7)
 nikka = liquor_store.items.create(name: "Nikka", description: "Straight from the barrel!", price: 180, image: "https://cdn11.bigcommerce.com/s-zhp7f0lunw/images/stencil/1024x1024/products/17352/4757/Nikka_From_the_Barrel__52967.1577829892.jpg?c=2", inventory: 10)
 
 
@@ -53,6 +56,16 @@ user = User.create(name: "Jordan",
                     password: "password",
                     password_confirmation: "password",
                     role: 0)
+
+user = User.create(name: "Linda",
+    address: "123 Oak Drive",
+    city: "Denver",
+    state: "CO",
+    zip_code: "80228",
+    email: "user@gmail.com",
+    password: "password",
+    password_confirmation: "password",
+    role: 0)
 
 admin = User.create(name: "Admin",
                     address: "394 High St",

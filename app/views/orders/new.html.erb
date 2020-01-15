@@ -5,6 +5,7 @@
     <th>Price</th>
     <th>Quantity</th>
     <th>Subtotal</th>
+    <th></th>
     <th>Discount Applied</th>
     <th>Sold By</th>
     <th>Inventory</th>
@@ -16,12 +17,12 @@
       <td><p><%= quantity %></p></td>
       <td><p><%= number_to_currency(cart.subtotal(item)) %></p><td>
       <% if current_coupon.nil? or !item.eligible_for_discount?(current_coupon) %>
-        <td><p>No Discount Applied</p></td>
         <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
+        <td><p>No Discount Applied</p></td>
         <td><p><%= item.inventory %> in stock</p></td>
       <% else %>
+       <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
         <td><p><%= number_to_currency(quantity * item.total_discount_applied(current_coupon)) %></p></td>
-        <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
         <td><p><%= item.inventory %> in stock</p></td>
       <%end%>
     </tr>
