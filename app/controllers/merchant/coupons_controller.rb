@@ -13,6 +13,16 @@ class Merchant::CouponsController < Merchant::BaseController
         create_coupon(@coupon)
     end
 
+    def edit
+        @coupon = Coupon.find(params[:id])
+    end
+
+    def update
+        @coupon = Coupon.find(params[:id])
+        @coupon.update(coupon_params)
+        update_coupon(@coupon)
+    end
+
     def destroy
         coupon = Coupon.find(params[:id])
         destroy_coupon(coupon)
@@ -25,15 +35,6 @@ class Merchant::CouponsController < Merchant::BaseController
         params.permit(:name,:code,:percent_off)
     end
 
-    def destroy_coupon(coupon)
-        if coupon.orders.empty?
-            coupon.destroy
-            flash[:success] = "You deleted #{coupon.name}"
-        else
-            flash[:error] = "This coupon has been used on orders and cannot be deleted at this time."
-        end
-    end
-
     def create_coupon(coupon)
         if coupon.save
             flash[:success] = "You've successfully added a new coupon!"
@@ -41,6 +42,25 @@ class Merchant::CouponsController < Merchant::BaseController
         else
             flash[:error] = coupon.errors.full_messages.to_sentence
             render :new
+        end
+    end
+
+    def update_coupon(coupon)
+        if coupon.save
+            flash[:success] = "You've successfully edited this coupon!"
+            redirect_to "/merchant/coupons"
+        else
+            flash[:error] = coupon.errors.full_messages.to_sentence
+            render :edit
+        end
+    end
+
+    def destroy_coupon(coupon)
+        if coupon.orders.empty?
+            coupon.destroy
+            flash[:success] = "You deleted #{coupon.name}"
+        else
+            flash[:error] = "This coupon has been used on orders and cannot be deleted at this time."
         end
     end
 end

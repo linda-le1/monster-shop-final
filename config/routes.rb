@@ -63,11 +63,13 @@ Rails.application.routes.draw do
     get '/items/new', to: 'items#new'
     post '/items', to: 'items#create'
     delete '/items/:id', to: 'items#destroy'
-    patch 'items/:id', to: 'items#update'
+    patch '/items/:id', to: 'items#update'
     get '/items/:id/edit', to: 'items#edit'
     get '/coupons', to: 'coupons#index'
     get '/coupons/new', to: 'coupons#new'
     post '/coupons', to: 'coupons#create'
+    get '/coupons/:id/edit', to: 'coupons#edit'
+    patch '/coupons/:id', to: 'coupons#update'
     delete 'coupons/:id', to: 'coupons#destroy'
   end
 
