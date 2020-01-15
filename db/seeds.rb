@@ -57,6 +57,16 @@ user = User.create(name: "Jordan",
                     password_confirmation: "password",
                     role: 0)
 
+user = User.create(name: "Linda",
+    address: "123 Oak Drive",
+    city: "Denver",
+    state: "CO",
+    zip_code: "80228",
+    email: "user@gmail.com",
+    password: "password",
+    password_confirmation: "password",
+    role: 0)
+
 admin = User.create(name: "Admin",
                     address: "394 High St",
                     city: "Denver",
