@@ -41,6 +41,10 @@ class Item <ApplicationRecord
   end
 
   def total_discount_applied(current_coupon)
+    if eligible_for_discount?(current_coupon)
       price * current_coupon.percent_off.to_f
+    else
+      price
+    end
   end
 end

@@ -135,5 +135,42 @@ RSpec.describe "Order Creation" do
         expect(page).to have_content("4")
       end
     end
+    describe "Create a discounted order" do
+      it "can create a discounted order" do
+        merchant = create(:random_merchant)
+        merchant_2 = create(:random_merchant)
+        coupon_1 = Coupon.create(name: '10 Percent Off Total Purchase', code: '10OFF', percent_off: 0.10)
+        merchant.coupons << coupon_1
+
+        user = create(:random_user, role: 0)
+        item_1 = create(:random_item, merchant_id: merchant.id, price: 20, inventory: 10)
+        item_2 = create(:random_item, merchant_id: merchant_2.id, price: 150, inventory: 10)
+
+        visit '/cart'
+        expect(page).to have_link("Empty Cart")
+        click_on "Empty Cart"
+
+        visit "/items/#{item_1.id}"
+        click_on "Add To Cart"
+        visit "/items/#{item_2.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        within "#checkout" do
+          fill_in :code, with: '10OFF'
+          click_on 'Apply Coupon'
+        end
+
+        click_on "Checkout"
+
+        fill_in :name, with: 'Linda Le'
+        fill_in :address, with: '123 Oak St.'
+        fill_in :city, with: 'Denver'
+        fill_in :state, with: 'CO'
+        fill_in :zip, with: '80228'
+        click_on 'Create Order'
+      end
+    end
   end
 end
