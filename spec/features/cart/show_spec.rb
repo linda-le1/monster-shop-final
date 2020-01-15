@@ -60,10 +60,8 @@ RSpec.describe 'Cart show' do
       it 'I can add a coupon code and see the discounted and updated total for that item' do
             merchant = create(:random_merchant)
             merchant_2 = create(:random_merchant)
-            merchant_user = create(:random_user, role: 3, merchant_id: merchant.id)
             coupon_1 = Coupon.create(name: '10 Percent Off Total Purchase', code: '10OFF', percent_off: 0.10)
             merchant.coupons << coupon_1
-
             user = create(:random_user, role: 0)
             item_1 = create(:random_item, merchant_id: merchant.id, price: 20, inventory: 10)
             item_2 = create(:random_item, merchant_id: merchant_2.id, price: 150, inventory: 10)
@@ -95,6 +93,8 @@ RSpec.describe 'Cart show' do
             expect(page).to have_content('$18.00')
             expect(page).to have_content('No Discount Applied')
             expect(page).to have_content('$150.00')
+            expect(page).to have_content('Total: $170.00')
+            expect(page).to have_content('Discounted Total: $168.00')
 
 
         end

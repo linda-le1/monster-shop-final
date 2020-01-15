@@ -5,6 +5,7 @@
     <th>Price</th>
     <th>Quantity</th>
     <th>Subtotal</th>
+    <th>Discount Applied</th>
     <th>Sold By</th>
     <th>Inventory</th>
   </tr>
@@ -14,12 +15,22 @@
       <td><p><%= number_to_currency(item.price) %></p></td>
       <td><p><%= quantity %></p></td>
       <td><p><%= number_to_currency(cart.subtotal(item)) %></p><td>
-      <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
-      <td><p><%= item.inventory %> in stock</p></td>
+      <% if current_coupon.nil? or !item.eligible_for_discount?(current_coupon) %>
+        <td><p>No Discount Applied</p></td>
+        <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
+        <td><p><%= item.inventory %> in stock</p></td>
+      <% else %>
+        <td><p><%= number_to_currency(quantity * item.total_discount_applied(current_coupon)) %></p></td>
+        <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
+        <td><p><%= item.inventory %> in stock</p></td>
+      <%end%>
     </tr>
   <% end %>
 </table>
-<h3 align = "right">Total: <%= number_to_currency(cart.total)%></h3>
+<h3 align = "right">Total(before any applied discounts): <%= number_to_currency(cart.total)%></h3>
+<% if current_coupon %>
+<h3 align = "right">DISCOUNTED Total: <%= number_to_currency(cart.find_discounted_total(current_coupon))%></h3>
+<% end %>
 <center>
   <h2>Shipping Info:</h2>
   <%= form_tag "/profile/orders", method: :create do %>
