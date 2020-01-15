@@ -35,4 +35,12 @@ class Item <ApplicationRecord
   def toggle_active_status
     toggle!(:active?)
   end
+
+  def eligible_for_discount?(current_coupon)
+    current_coupon.merchant_id == merchant_id
+  end
+
+  def total_discount_applied(current_coupon)
+    price * current_coupon.percent_off.to_f
+  end
 end

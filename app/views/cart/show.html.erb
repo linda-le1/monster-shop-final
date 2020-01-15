@@ -9,6 +9,8 @@
     <th>Price</th>
     <th>Quantity</th>
     <th>Subtotal</th>
+    <th>Discount Amount</th>
+    <th>Discounted Item Total</th>
   </tr>
   <% @items.each do |item,quantity| %>
     <tr id= "cart-item-<%=item.id%>">
@@ -37,15 +39,35 @@
         </center>
         </td>
       <td>
-        <p><%=number_to_currency(cart.subtotal(item))%></p>
+        <p><%= number_to_currency(cart.subtotal(item)) %></p>
     </td>
+    <% if current_coupon.nil? or !item.eligible_for_discount?(current_coupon) %>
+    <td>
+    No Discount Applied
+    </td>
+    <td>
+    No Discount Applied
+    </td>
+    <% else %>
+    <td> <%= number_to_currency(quantity * item.total_discount_applied(current_coupon)) %> DISCOUNT</td>
+    <td> <%=  number_to_currency(cart.subtotal(item) - (quantity * item.total_discount_applied(current_coupon))) %></td>
+    <% end %>
     </tr>
-  <% end %>
+    <% end %>
 </table>
-  <p>Total: <%= number_to_currency(cart.total) %></p>
+
+
+  <h3>Total: <%= number_to_currency(cart.total) %></h3>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
+
   <section id="checkout">
     <% if current_user %>
+      <h3>Add Discount Code Here: </h3>
+        <%= form_tag coupon_path, method: :patch do %>
+        <%= label_tag 'Coupon Code' %>
+        <%= text_field_tag :code %><br/><br/>
+        <%= submit_tag "Apply Coupon" %>
+        <% end %><br/>
       <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
     <% else %>
       <p>You must <%= link_to 'register', '/register', method: :get %> or <%= link_to 'login', '/login', method: :get %> to finish the checkout process.</p>
