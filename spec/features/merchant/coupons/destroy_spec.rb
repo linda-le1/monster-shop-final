@@ -11,7 +11,7 @@ RSpec.describe 'As a merchant' do
             @merchant.coupons << @coupon_2
 
             @user = create(:random_user, role: 0)
-            @item_1 = create(:random_item, merchant_id: merchant.id, inventory: 10)
+            @item_1 = create(:random_item, merchant_id: @merchant.id, inventory: 10)
             @order = create(:random_order, user_id: @user.id)
             @item_order = ItemOrder.create!(item: @item_1, order: @order, price: @item_1.price, quantity: 5)
             @coupon_2.orders << @order
