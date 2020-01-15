@@ -76,8 +76,10 @@ RSpec.describe 'Cart show' do
 
             visit '/cart'
 
-            fill_in :code, with: '10OFF'
-            click_on 'Apply'
+            within "#discount" do
+              fill_in :code, with: '10OFF'
+              click_on 'Apply Coupon'
+            end
 
             expect(current_path).to eql('/cart')
             expect(page).to have_content('Discount Applied: $2.00')
@@ -97,7 +99,6 @@ RSpec.describe 'Cart show' do
         visit '/cart'
         expect(page).to_not have_link("Empty Cart")
       end
-
     end
   end
 end
