@@ -8,7 +8,7 @@ class Merchant::ItemsController < Merchant::BaseController
     @item = Item.find(params[:id])
   end
 
-  def show
+  def index
     @items = Merchant.find(current_user.merchant.id).items
   end
 
