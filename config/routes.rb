@@ -10,8 +10,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
 
-  resources :reviews, only: [:edit, :update, :destroy] do
-  end
+  resources :reviews, only: [:edit, :update, :destroy]
 
   get '/cart', to: 'cart#show'
   delete '/cart', to: 'cart#empty'
@@ -21,8 +20,7 @@ Rails.application.routes.draw do
 
   patch '/coupon', to: 'coupons#update'
 
-  resources :orders, only: [:new, :show, :update] do
-  end
+  resources :orders, only: [:new, :show, :update]
 
   post '/profile/orders', to: 'orders#create'
   get '/profile/orders', to: 'orders#index'
@@ -43,27 +41,21 @@ Rails.application.routes.draw do
     get '/', to: 'dashboard#index'
     get '/profile', to: 'users#index'
 
-    resources :item_orders, only: [:update] do
-    end
+    resources :item_orders, only: [:update]
 
-    resources :orders, only: [:show] do
-    end
+    resources :orders, only: [:show]
 
-    resources :items do
-    end
+    resources :items
 
-    resources :coupons do
-    end
+    resources :coupons
 
   end
 
   namespace :admin do
 
-    resources :users, only: [:index, :show, :update] do
-    end
+    resources :users, only: [:index, :show, :update]
 
-    resources :merchants, only: [:index, :show, :update] do
-    end
+    resources :merchants, only: [:index, :show, :update]
 
     get '/', to: 'dashboard#index'
     get '/profile/:id', to: 'users#show'
