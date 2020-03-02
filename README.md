@@ -1,5 +1,6 @@
 # Monster Shop
 
+![](app/assets/images/monster_shop_final.png)
 
 ## Introduction
 
@@ -73,7 +74,7 @@ ActiveRecord
 Software Testing
 HTML/CSS layout and styling
 
-## THIS SOLO IMPLEMENTATION WAS BUILT OFF THE FOLLOWING GROUP PROJECT:
+## Solo Implementation 
 BE Mod 2 Week 4/5 Group Project (Part 1)
 
 "Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will automatically set the order status to "shipped". Each user role will have access to some or all CRUD functionality for application models.
